@@ -1,0 +1,19 @@
+version: "3"
+
+services: 
+  monolitico:
+    build: ./monolithic
+  teacher:
+    build: ./microservices/teacher-service 
+  task:
+    build: ./microservices/task-service
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - monolithic
+      - teacher
+      - task
